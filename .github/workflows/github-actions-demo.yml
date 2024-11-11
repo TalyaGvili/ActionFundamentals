@@ -1,0 +1,39 @@
+# Set the workflow name to GitHub Actions Demo
+name: GitHub Actions Demo
+
+# Add triggers for the workflow
+on:
+  # Trigger on push to the main branch, but exclude changes in the .github folder
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/**'
+ # Trigger on pull request with main as the base branch
+  pull_request:
+    branches:
+      - main
+
+  # Trigger every Sunday at 6:15 UTC
+  schedule:
+    - cron: '15 6 * * 0'
+      # Allow manual triggering of the workflow
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "🎉 The job was triggered by event: ${{ github.event_name }}"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ."
+
+      - uses: actions/checkout@v3.3.0
+
+      - name: List files in the repository
+        run: |
+          echo "The repository ${{ github.repository }} contains the following files:"
+          tree
+  
+
+  
